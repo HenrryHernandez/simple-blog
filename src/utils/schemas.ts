@@ -16,3 +16,12 @@ export const SignUpSchema = z.object({
     message: "Username is required",
   }),
 });
+
+export const NewPostSchema = z.object({
+  title: z.string().min(1, {
+    message: "A title is needed",
+  }),
+  content: z.string().min(15, {
+    message: "Please, insert at least 15 characters",
+  }),
+});
