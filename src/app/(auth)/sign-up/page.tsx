@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod/lib";
@@ -98,7 +99,7 @@ const SignInPage = () => {
             type="submit"
             className="w-full bg-gray-600"
           >
-            Submit
+            {isLoading ? <Loader2 className="animate-spin" /> : "Submit"}
           </Button>
         </form>
       </CardWrapper>
