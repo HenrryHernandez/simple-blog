@@ -38,8 +38,14 @@ export async function POST(request: NextRequest) {
 
     cookies().set("token", token, { httpOnly: true });
 
-    return NextResponse.json({ status: 200, msg: "Login succesfull" }, {});
+    const { id, username } = userFound;
+
+    return NextResponse.json(
+      { status: 200, msg: "Login succesfull", user: { id, email, username } },
+      {}
+    );
   } catch (error) {
-    return NextResponse.json({ status: 500 });
+    console.log(error);
+    return NextResponse.json({ msg: "error" }, { status: 500 });
   }
 }
