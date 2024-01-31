@@ -34,11 +34,11 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const token = generateToken(email);
+    const { id, username } = userFound;
+
+    const token = generateToken(id, email, username);
 
     cookies().set("token", token, { httpOnly: true });
-
-    const { id, username } = userFound;
 
     return NextResponse.json(
       { status: 200, msg: "Login succesfull", user: { id, email, username } },
