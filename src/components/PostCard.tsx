@@ -1,4 +1,4 @@
-import React from "react";
+import { useContext } from "react";
 
 import { Post } from "@/interfaces";
 import {
@@ -8,18 +8,28 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import { ModalsHandlersContext } from "@/contexts";
 
-export const PostCard = ({ title, content, author, createdAt }: Post) => {
+export const PostCard = (post: Post) => {
+  const { setCurrentPost, openBlogCardModal } = useContext(
+    ModalsHandlersContext
+  );
+
+  const { title, content, author, createdAt } = post;
+
   const getFirstSeventyCharacters = (text: string) => {
     return `${text.slice(0, 70).trim()}${text.length > 70 ? "..." : ""}`;
+  };
+
+  const handleClick = () => {
+    setCurrentPost(post);
+    openBlogCardModal();
   };
 
   return (
     <Card
       className="w-full sm:w-80 h-64 flex flex-col cursor-pointer shadow-md transition-all hover:scale-105 hover:shadow-xl"
-      onClick={() => {
-        console.log("toggling...");
-      }}
+      onClick={handleClick}
     >
       <CardHeader className="">
         <CardTitle>{title}</CardTitle>

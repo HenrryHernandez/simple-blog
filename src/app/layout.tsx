@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { Header } from "@/components";
-import { FiltersContextProvider } from "@/contexts";
+import { Header, ModalsContainer } from "@/components";
+import { FiltersContextProvider, ModalsHandlersProvider } from "@/contexts";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,11 +20,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={inter.className}>
-        <FiltersContextProvider>
-          <Header />
+        <ModalsHandlersProvider>
+          <ModalsContainer>
+            <FiltersContextProvider>
+              <Header />
 
-          {children}
-        </FiltersContextProvider>
+              {children}
+            </FiltersContextProvider>
+          </ModalsContainer>
+        </ModalsHandlersProvider>
       </body>
     </html>
   );
