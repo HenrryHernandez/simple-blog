@@ -3,10 +3,16 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { Plus, Home } from "lucide-react";
+import { Home, Settings } from "lucide-react";
 
 import { FilterBy } from "./FilterBy";
 import { useAppSelector } from "@/redux";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 export const Header = () => {
   const pathname = usePathname();
@@ -29,12 +35,17 @@ export const Header = () => {
         ) : null}
 
         {isAuthenticated ? (
-          <Link
-            href="/posts/new"
-            className="p-4 rounded-md border border-gray-300 bg-gray-200 hover:bg-gray-300 cursor-pointer"
-          >
-            <Plus className="h-6 w-6 text-gray-400" aria-hidden="true" />
-          </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="p-4 rounded-md border border-gray-300 bg-gray-200 hover:bg-gray-300 cursor-pointer">
+              <Settings className="h-6 w-6 text-gray-400" aria-hidden="true" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>
+                <Link href="/posts/new">Add new post</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ) : (
           <Link
             href={"/sign-in"}
