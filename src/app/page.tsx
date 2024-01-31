@@ -2,11 +2,21 @@
 
 import { useContext } from "react";
 
+import { Loader2 } from "lucide-react";
+
 import { PostCard } from "@/components";
 import { FiltersContext } from "@/contexts";
 
 export default function Home() {
-  const { posts } = useContext(FiltersContext);
+  const { isLoading, posts } = useContext(FiltersContext);
+
+  if (isLoading) {
+    return (
+      <div className="w-full col-center absolute inset-0">
+        <Loader2 className="w-12 h-12 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full col-center">

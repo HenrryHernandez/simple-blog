@@ -15,6 +15,7 @@ interface FiltersContextProps {
   posts: Post[] | undefined;
   filterByKey: AllowedQueries | undefined;
   filterByValue: string | number;
+  isLoading: boolean;
   filter: () => void;
   getAll: () => void;
   setFilterByKey: Dispatch<SetStateAction<AllowedQueries | undefined>>;
@@ -56,6 +57,7 @@ export const FiltersContextProvider = ({ children }: Props) => {
         posts,
         filterByKey,
         filterByValue,
+        isLoading,
         filter,
         getAll,
         setFilterByKey,
