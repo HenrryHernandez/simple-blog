@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
@@ -18,6 +18,7 @@ import { useAuth } from "@/hooks";
 import { AppDispatch, useAppSelector, clearAuth } from "@/redux";
 
 const Menu = () => {
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const { signOut } = useAuth();
 
@@ -31,6 +32,8 @@ const Menu = () => {
     }
 
     dispatch(clearAuth());
+
+    router.replace("/");
   };
 
   return (
