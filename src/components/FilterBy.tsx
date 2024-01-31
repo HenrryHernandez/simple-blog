@@ -1,19 +1,50 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { Filter } from "lucide-react";
 
-import { FiltersContext } from "@/contexts";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
+import { ScrollArea } from "./ui/scroll-area";
+import { Separator } from "./ui/separator";
+import { Label } from "./ui/label";
+import { FiltersContext } from "@/contexts";
+import { useUser } from "@/hooks";
+import { Author } from "@/interfaces";
+import { cn } from "@/lib/utils";
 
 export const FilterBy = () => {
-  const { filterByKey, setFilterByKey, setfilterByValue } =
+  const { filterByKey, filterByValue, setFilterByKey, setFilterByValue } =
     useContext(FiltersContext);
 
-  const handleCheckboxChange = (component: string) => {
-    setFilterByKey(component);
+  const [users, setUsers] = useState<Author[] | null>([]);
+
+  const { getUsers } = useUser();
+
+  const handleCheckboxChange = (key: string) => {
+    setFilterByKey(key);
+    setFilterByValue("");
   };
+
+  const handleInputChange = (value: string | number) => {
+    setFilterByValue(value);
+  };
+
+  const filter = () => {
+    console.log(filterByKey);
+    console.log(filterByValue);
+    setFilterByKey("");
+    setFilterByValue("");
+  };
+
+  useEffect(() => {
+    getUsers().then((data) => {
+      console.log(data);
+      setUsers(data);
+    });
+  }, []);
 
   return (
     <Popover>
@@ -23,40 +54,73 @@ export const FilterBy = () => {
       <PopoverContent className="w-96">
         <div className="col-center gap-y-8">
           <div className="row-center gap-8">
-            <div className="col-center w-12">
+            <div className="col-center w-12 gap-y-2">
               <input
                 type="radio"
                 id="title"
                 name="component"
                 onChange={() => handleCheckboxChange("title")}
               />
-              <label htmlFor="title">Title</label>
+              <Label htmlFor="title">Title</Label>
             </div>
 
-            <div className="col-center w-12">
+            <div className="col-center w-12 gap-y-2">
               <input
                 type="radio"
                 id="Content"
                 name="component"
                 onChange={() => handleCheckboxChange("content")}
               />
-              <label htmlFor="Content">Content</label>
+              <Label htmlFor="Content">Content</Label>
             </div>
 
-            <div className="col-center w-12">
+            <div className="col-center w-12 gap-y-2">
               <input
                 type="radio"
                 id="author"
                 name="component"
                 onChange={() => handleCheckboxChange("author")}
               />
-              <label htmlFor="author">Author</label>
+              <Label htmlFor="author">Author</Label>
             </div>
           </div>
 
-          {filterByKey === "title" && <div>title</div>}
-          {filterByKey === "content" && <div>content</div>}
-          {filterByKey === "author" && <div>author</div>}
+          <div className="bg-blue-300s w-full">
+            {filterByKey === "title" && (
+              <Input
+                className="border-gray-300"
+                onChange={(e) => handleInputChange(e.target.value)}
+              />
+            )}
+            {filterByKey === "content" && (
+              <Input
+                className="border-gray-300"
+                onChange={(e) => handleInputChange(e.target.value)}
+              />
+            )}
+            {filterByKey === "author" && (
+              <ScrollArea className="h-44 w-full rounded-md border">
+                <div className="p-4">
+                  {users?.map(({ id, username }) => (
+                    <div
+                      key={id}
+                      className={cn("hover:bg-gray-100 cursor-pointer", {
+                        "bg-gray-100": filterByValue === id,
+                      })}
+                      onClick={() => handleInputChange(id)}
+                    >
+                      <div className="text-sm">{username}</div>
+                      <Separator className="my-2" />
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
+            )}
+          </div>
+
+          <div>
+            <Button onClick={filter}>Filter</Button>
+          </div>
         </div>
       </PopoverContent>
     </Popover>
