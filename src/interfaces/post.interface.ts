@@ -1,4 +1,4 @@
-export interface Author {
+export interface User {
   id: number;
   email: string;
   username: string;
@@ -8,7 +8,7 @@ export interface Post {
   id: number;
   title: string;
   content: string;
-  author: Author;
+  author: User;
   createdAt: string;
 }
 

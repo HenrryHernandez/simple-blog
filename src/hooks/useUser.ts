@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Author, StandardResponse } from "@/interfaces";
+import { User, StandardResponse } from "@/interfaces";
 import blogApi from "@/lib/blogApi";
 
 export const useUser = () => {
@@ -10,7 +10,7 @@ export const useUser = () => {
     setIsLoading(true);
 
     try {
-      const { data } = await blogApi.get<StandardResponse<{ users: Author[] }>>(
+      const { data } = await blogApi.get<StandardResponse<{ users: User[] }>>(
         "/users"
       );
 

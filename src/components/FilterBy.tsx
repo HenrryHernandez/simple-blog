@@ -12,7 +12,7 @@ import { Separator } from "./ui/separator";
 import { Label } from "./ui/label";
 import { FiltersContext } from "@/contexts";
 import { useUser } from "@/hooks";
-import { AllowedQueries, Author } from "@/interfaces";
+import { AllowedQueries, User } from "@/interfaces";
 import { cn } from "@/lib/utils";
 
 export const FilterBy = () => {
@@ -25,7 +25,7 @@ export const FilterBy = () => {
     setFilterByValue,
   } = useContext(FiltersContext);
 
-  const [users, setUsers] = useState<Author[] | null>([]);
+  const [users, setUsers] = useState<User[] | null>([]);
 
   const { getUsers } = useUser();
 
