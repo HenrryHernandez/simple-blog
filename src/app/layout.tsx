@@ -3,10 +3,9 @@ import { Inter } from "next/font/google";
 
 import { Toaster } from "sonner";
 
-import { Header, Initializer, ModalsContainer } from "@/components";
-import { FiltersContextProvider, ModalsHandlersProvider } from "@/contexts";
+import { Header } from "@/components";
+import { Providers } from "./Providers";
 import "./globals.css";
-import { ReduxProvider } from "@/redux";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,19 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={inter.className}>
-        <ReduxProvider>
-          <Initializer>
-            <ModalsHandlersProvider>
-              <ModalsContainer>
-                <FiltersContextProvider>
-                  <Header />
-
-                  {children}
-                </FiltersContextProvider>
-              </ModalsContainer>
-            </ModalsHandlersProvider>
-          </Initializer>
-        </ReduxProvider>
+        <Providers>
+          <Header /> {children}
+        </Providers>
 
         <Toaster position="top-center" richColors />
       </body>
