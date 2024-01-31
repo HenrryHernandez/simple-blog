@@ -35,7 +35,7 @@ const SignInPage = () => {
   };
 
   return (
-    <div className=" w-full h-full row-center">
+    <div className="min-h-[calc(100vh-80px)] w-full h-full row-center px-4">
       <CardWrapper
         headerLabel="Sign Up"
         footerLabel="Already have an account?"
@@ -91,7 +91,7 @@ const SignInPage = () => {
           <Button
             disabled={isLoading}
             type="submit"
-            className="w-full bg-blue-300"
+            className="w-full bg-gray-600"
           >
             Submit
           </Button>

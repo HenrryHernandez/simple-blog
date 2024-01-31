@@ -24,7 +24,7 @@ export const CardWrapper = ({
   footerLink,
 }: Props) => {
   return (
-    <Card className="w-[400px] bg-blue-100 shadow-md">
+    <Card className="w-[400px] bg-gray-200 shadow-md">
       <CardHeader>
         <div className="row-center">{headerLabel}</div>
       </CardHeader>
