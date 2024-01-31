@@ -13,9 +13,12 @@ export const useAuth = () => {
     setIsLoading(true);
 
     try {
-      const { data } = await blogApi.post("/auth/sign-in", signInData);
+      const { data } = await blogApi.post<StandardResponse<{ user: User }>>(
+        "/auth/sign-in",
+        signInData
+      );
 
-      return data.user;
+      return data.data?.user;
     } catch (error) {
       console.log(error);
       return null;

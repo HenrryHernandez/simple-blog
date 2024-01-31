@@ -41,11 +41,18 @@ export async function POST(request: NextRequest) {
     cookies().set("token", token, { httpOnly: true });
 
     return NextResponse.json(
-      { status: 200, msg: "Login succesfull", user: { id, email, username } },
+      {
+        success: true,
+        msg: "Login succesfull",
+        data: { user: { id, email, username } },
+      },
       {}
     );
   } catch (error) {
     console.log(error);
-    return NextResponse.json({ msg: "error" }, { status: 500 });
+    return NextResponse.json(
+      { success: false, data: null, msg: "error" },
+      { status: 500 }
+    );
   }
 }
