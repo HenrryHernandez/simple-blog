@@ -6,8 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod/lib";
 
+import { CardWrapper } from "@/components";
 import { Input } from "@/components/ui/input";
-import { CardWrapper } from "@/components/CardWrapper";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks";
