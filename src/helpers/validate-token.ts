@@ -1,16 +1,36 @@
 import jwt from "jsonwebtoken";
 
-export const validateToken = async (token: string | undefined) => {
+interface JwtPayload {
+  id: number;
+  email: string;
+  username: string;
+}
+
+const verifyTokenAndGetPayloadPromise = (
+  token: string
+): Promise<JwtPayload | null> => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, process.env.JWT_SECRET_KEY + "", (error, decoded) => {
+      if (error) {
+        resolve(null);
+      } else {
+        const payload = decoded as JwtPayload;
+        resolve(payload);
+      }
+    });
+  });
+};
+
+export const verifyTokenAndGetPayload = async (token: string | undefined) => {
   if (!token) {
-    return false;
+    return null;
   }
 
-  try {
-    jwt.verify(token, process.env.JWT_SECRET_KEY + "");
+  const validToken = await verifyTokenAndGetPayloadPromise(token);
 
-    return true;
-  } catch (error) {
-    console.log(error);
-    return false;
+  if (!validToken) {
+    return null;
   }
+
+  return validToken;
 };
