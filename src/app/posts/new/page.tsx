@@ -38,7 +38,7 @@ const NewPostPage = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-80px)] w-full h-full row-center">
+    <div className="min-h-[calc(100vh-80px)] w-full h-full row-center p-4">
       <Card className="w-full sm:max-w-[800px] bg-gray-200 shadow-md">
         <CardHeader>
           <div className="row-center">New Post</div>
