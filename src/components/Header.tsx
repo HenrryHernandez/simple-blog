@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { Plus, Home } from "lucide-react";
 
@@ -8,6 +9,7 @@ import { FilterBy } from "./FilterBy";
 import { useAppSelector } from "@/redux";
 
 export const Header = () => {
+  const pathname = usePathname();
   const { isAuthenticated } = useAppSelector((state) => state.authReducer);
 
   return (
@@ -20,9 +22,11 @@ export const Header = () => {
           <Home className="h-6 w-6 text-gray-400" aria-hidden="true" />
         </Link>
 
-        <div>
-          <FilterBy />
-        </div>
+        {pathname === "/" ? (
+          <div>
+            <FilterBy />
+          </div>
+        ) : null}
 
         {isAuthenticated ? (
           <Link
