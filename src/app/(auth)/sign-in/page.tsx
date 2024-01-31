@@ -1,7 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import z from "zod/lib";
 
 import { CardWrapper } from "@/components";
@@ -9,10 +12,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks";
+import { AppDispatch, setAuth } from "@/redux";
 import { cn } from "@/lib/utils";
 import { SignInSchema } from "@/utils";
 
 const SignInPage = () => {
+  const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+
   const { isLoading, signIn } = useAuth();
 
   const {
@@ -24,7 +31,15 @@ const SignInPage = () => {
   });
 
   const login = async (data: z.infer<typeof SignInSchema>) => {
-    await signIn(data);
+    const user = await signIn(data);
+
+    if (!user) {
+      // TODO: toast
+    }
+
+    dispatch(setAuth({ isAuthenticated: true }));
+
+    router.replace("/");
   };
 
   return (
