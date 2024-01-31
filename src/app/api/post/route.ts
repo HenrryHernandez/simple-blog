@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
           id: true,
           title: true,
           content: true,
-          author: { select: { username: true, email: true } },
+          author: { select: { id: true, username: true, email: true } },
           createdAt: true,
         },
       });
@@ -73,7 +73,7 @@ export async function GET(request: NextRequest) {
           id: true,
           title: true,
           content: true,
-          author: { select: { username: true, email: true } },
+          author: { select: { id: true, username: true, email: true } },
           createdAt: true,
         },
       });
