@@ -20,33 +20,31 @@ export default function Home() {
 
   return (
     <div className="w-full col-center">
-      <div className="xl:max-w-[1200px] w-full xl:bg-gray-100 xl:border-x xl:border-gray-200 -z-10">
+      <div className="xl:max-w-[1200px] w-full xl:bg-gray-100 xl:border-x xl:border-gray-200">
         <div className="min-h-[calc(100vh-80px)] w-full flex-wrap p-2 sm:p-8">
           <main className="w-full flex flex-col items-center">
             {/* <div>filter</div> */}
 
             <div className="flex flex-wrap justify-center gap-8">
-              {posts
-                ?.slice(8)
-                .map(
-                  ({
-                    id,
-                    title,
-                    content,
-                    createdAt,
-                    author: { username, email },
-                  }) => (
-                    <PostCard
-                      key={id}
-                      {...{
-                        title,
-                        content,
-                        username,
-                        createdAt,
-                      }}
-                    />
-                  )
-                )}
+              {posts?.map(
+                ({
+                  id,
+                  title,
+                  content,
+                  createdAt,
+                  author: { username, email },
+                }) => (
+                  <PostCard
+                    key={id}
+                    {...{
+                      title,
+                      content,
+                      username,
+                      createdAt,
+                    }}
+                  />
+                )
+              )}
             </div>
           </main>
         </div>
