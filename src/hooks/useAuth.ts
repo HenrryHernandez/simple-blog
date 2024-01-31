@@ -44,6 +44,22 @@ export const useAuth = () => {
     }
   };
 
+  const signOut = async () => {
+    setIsLoading(true);
+
+    try {
+      await blogApi.post<StandardResponse>("/auth/sign-out");
+
+      return true;
+    } catch (error) {
+      console.log(error);
+
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const validateToken = async () => {
     setIsLoading(true);
 
@@ -60,5 +76,5 @@ export const useAuth = () => {
     }
   };
 
-  return { isLoading, signIn, signUp, validateToken };
+  return { isLoading, signIn, signUp, signOut, validateToken };
 };
