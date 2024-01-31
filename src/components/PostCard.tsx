@@ -32,7 +32,7 @@ export const PostCard = (post: Post) => {
       onClick={handleClick}
     >
       <CardHeader className="">
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="line-clamp-1">{title}</CardTitle>
       </CardHeader>
       <CardContent className="flex-1">
         <p>{getFirstSeventyCharacters(content)}</p>
