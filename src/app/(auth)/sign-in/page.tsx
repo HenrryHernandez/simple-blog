@@ -1,7 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -19,7 +17,6 @@ import { cn } from "@/lib/utils";
 import { SignInSchema } from "@/utils";
 
 const SignInPage = () => {
-  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
 
   const { isLoading, signIn } = useAuth();
@@ -44,8 +41,6 @@ const SignInPage = () => {
     toast.success("Log in successful");
 
     dispatch(setAuth({ isAuthenticated: true }));
-
-    router.replace("/");
   };
 
   return (
