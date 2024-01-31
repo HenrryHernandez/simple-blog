@@ -1,27 +1,27 @@
 import * as z from "zod";
 
 export const SignInSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
+  email: z.string().trim().email(),
+  password: z.string().trim(),
 });
 
 export const SignUpSchema = z.object({
-  email: z.string().email({
+  email: z.string().trim().email({
     message: "Email is required",
   }),
-  password: z.string().min(4, {
+  password: z.string().trim().min(4, {
     message: "Insert at least 4 characters",
   }),
-  username: z.string().min(1, {
+  username: z.string().trim().min(1, {
     message: "Username is required",
   }),
 });
 
 export const NewPostSchema = z.object({
-  title: z.string().min(1, {
+  title: z.string().trim().min(1, {
     message: "A title is needed",
   }),
-  content: z.string().min(15, {
+  content: z.string().trim().min(15, {
     message: "Please, insert at least 15 characters",
   }),
 });
