@@ -16,10 +16,8 @@ import {
 import { useAuth } from "@/hooks";
 import { AppDispatch, useAppSelector, clearAuth } from "@/redux";
 
-export const Header = () => {
-  const pathname = usePathname();
+const Menu = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isAuthenticated } = useAppSelector((state) => state.authReducer);
   const { signOut } = useAuth();
 
   const logout = async () => {
@@ -32,6 +30,27 @@ export const Header = () => {
 
     dispatch(clearAuth());
   };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="p-4 rounded-md border border-gray-300 bg-gray-200 hover:bg-gray-300 cursor-pointer">
+        <Settings className="h-6 w-6 text-gray-400" aria-hidden="true" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem>
+          <Link href="/posts/new">Add new post</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={logout} className="cursor-pointer">
+          Sign out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
+export const Header = () => {
+  const pathname = usePathname();
+  const { isAuthenticated } = useAppSelector((state) => state.authReducer);
 
   return (
     <div className="w-full h-20 row-center px-8 shadow-md sticky top-0 bg-white z-20">
@@ -50,20 +69,9 @@ export const Header = () => {
         ) : null}
 
         {isAuthenticated ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger className="p-4 rounded-md border border-gray-300 bg-gray-200 hover:bg-gray-300 cursor-pointer">
-              <Settings className="h-6 w-6 text-gray-400" aria-hidden="true" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>
-                <Link href="/posts/new">Add new post</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={logout} className="cursor-pointer">
-                Sign out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
+          <Menu />
+        ) : pathname.includes("sign-in") ||
+          pathname.includes("sign-up") ? null : (
           <Link
             href={"/sign-in"}
             className="p-4 rounded-md border border-gray-300 bg-gray-200 hover:bg-gray-300 cursor-pointer"
