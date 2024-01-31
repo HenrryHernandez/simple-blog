@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 import { Home, Settings } from "lucide-react";
 
 import { FilterBy } from "./FilterBy";
@@ -24,7 +25,8 @@ const Menu = () => {
     const res = signOut();
 
     if (!res) {
-      // TODO: toast
+      toast.error("There was an error. Please try again.");
+
       return;
     }
 

@@ -3,6 +3,7 @@
 import React from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import z from "zod/lib";
 
@@ -30,10 +31,10 @@ const NewPostPage = () => {
     const postCreated = await createNewPost(data);
 
     if (!postCreated) {
-      // TODO: set toast
+      toast.error("There was an error. Please try again.");
     } else {
+      toast.success("Post created successfully");
       reset({ title: "", content: "" });
-      // TODO: set toast
     }
   };
 

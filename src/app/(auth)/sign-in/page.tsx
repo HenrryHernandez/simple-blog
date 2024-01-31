@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 import z from "zod/lib";
 
 import { CardWrapper } from "@/components";
@@ -34,8 +35,12 @@ const SignInPage = () => {
     const user = await signIn(data);
 
     if (!user) {
-      // TODO: toast
+      toast.error("There was an error. Please try again.");
+
+      return;
     }
+
+    toast.success("Log in successful");
 
     dispatch(setAuth({ isAuthenticated: true }));
 

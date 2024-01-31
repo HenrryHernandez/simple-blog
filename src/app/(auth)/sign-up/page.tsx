@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod/lib";
 
 import { CardWrapper } from "@/components";
@@ -30,7 +31,11 @@ const SignInPage = () => {
     const userCreated = await signUp(data);
 
     if (userCreated) {
+      toast.success("User created successfully");
+
       router.push("/sign-in");
+    } else {
+      toast.error("There was an error. Please try again.");
     }
   };
 

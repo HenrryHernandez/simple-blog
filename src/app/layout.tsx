@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import { Toaster } from "sonner";
+
 import { Header, Initializer, ModalsContainer } from "@/components";
 import { FiltersContextProvider, ModalsHandlersProvider } from "@/contexts";
 import "./globals.css";
@@ -34,6 +36,8 @@ export default function RootLayout({
             </ModalsHandlersProvider>
           </Initializer>
         </ReduxProvider>
+
+        <Toaster position="top-center" richColors />
       </body>
     </html>
   );
