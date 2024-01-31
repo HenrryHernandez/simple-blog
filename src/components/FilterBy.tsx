@@ -40,7 +40,6 @@ export const FilterBy = () => {
 
   useEffect(() => {
     getUsers().then((data) => {
-      console.log(data);
       setUsers(data);
     });
   }, []);
