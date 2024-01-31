@@ -16,3 +16,12 @@ export interface PostData {
   total: number;
   posts: Post[];
 }
+
+export interface NewPostData {
+  id: number;
+  title: string;
+  content: string;
+  authorId: number;
+  createdAt: string;
+  updatedAt: string;
+}

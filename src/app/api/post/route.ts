@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
 
   if (!token) {
     return NextResponse.json(
-      { msg: "user not authenticated" },
+      { success: false, data: null, msg: "user not authenticated" },
       { status: 401 }
     );
   }
@@ -22,19 +22,24 @@ export async function POST(request: NextRequest) {
 
     if (!validToken) {
       return NextResponse.json(
-        { msg: "user not authenticated" },
+        { success: false, data: null, msg: "user not authenticated" },
         { status: 401 }
       );
     }
 
     const { id } = validToken;
 
-    await db.post.create({ data: { title, content, authorId: id } });
+    const newPost = await db.post.create({
+      data: { title, content, authorId: id },
+    });
 
-    return NextResponse.json({ msg: "success" });
+    return NextResponse.json({ success: true, data: newPost, msg: "success" });
   } catch (error) {
     console.log(error);
-    return NextResponse.json({ msg: "post was not created" }, { status: 500 });
+    return NextResponse.json(
+      { success: false, data: null, msg: "post was not created" },
+      { status: 500 }
+    );
   }
 }
 

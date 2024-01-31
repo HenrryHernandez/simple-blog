@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { z } from "zod";
 
-import { Filter, PostData, StandardResponse } from "@/interfaces";
+import { Filter, NewPostData, PostData, StandardResponse } from "@/interfaces";
 import blogApi from "@/lib/blogApi";
 import { NewPostSchema } from "@/utils";
 
@@ -13,12 +13,16 @@ export const usePost = () => {
     setIsLoading(true);
 
     try {
-      const { data } = await blogApi.post("/post", postData);
+      const { data } = await blogApi.post<StandardResponse<NewPostData>>(
+        "/post",
+        postData
+      );
 
-      return true;
+      return data.data;
     } catch (error) {
       console.log(error);
-      return false;
+
+      return null;
     } finally {
       setIsLoading(false);
     }

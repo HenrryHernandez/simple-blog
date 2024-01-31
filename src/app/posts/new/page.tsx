@@ -29,10 +29,10 @@ const NewPostPage = () => {
   const createPost = async (data: z.infer<typeof NewPostSchema>) => {
     const postCreated = await createNewPost(data);
 
-    if (postCreated) {
-      reset({ title: "", content: "" });
+    if (!postCreated) {
       // TODO: set toast
     } else {
+      reset({ title: "", content: "" });
       // TODO: set toast
     }
   };
