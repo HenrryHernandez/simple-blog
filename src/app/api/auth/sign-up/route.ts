@@ -18,21 +18,31 @@ export async function POST(request: NextRequest) {
     });
 
     if (userFound) {
-      return NextResponse.json({
-        status: 400,
-        msg: `User with email ${email} already exists`,
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          data: null,
+          msg: `User with email ${email} already exists`,
+        },
+        { status: 400 }
+      );
     }
 
     // encrypt password before creating user
     const encryptedPassword = await bcrypt.hash(password, 10);
 
-    await db.user.create({
+    const newUser = await db.user.create({
       data: { username, email, password: encryptedPassword },
     });
 
-    return NextResponse.json({ msg: "success" });
+    const { id } = newUser;
+
+    return NextResponse.json({
+      success: true,
+      data: { id, username, email },
+      msg: "success",
+    });
   } catch (error) {
-    return NextResponse.json({ status: 500 });
+    return NextResponse.json({ sucess: false, data: null, status: 500 });
   }
 }

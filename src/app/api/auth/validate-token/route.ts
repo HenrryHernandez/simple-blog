@@ -8,13 +8,19 @@ export async function GET(request: NextRequest) {
 
   try {
     if (!token) {
-      return NextResponse.json({ msg: "not token attached" }, { status: 401 });
+      return NextResponse.json(
+        { success: false, data: null, msg: "not token attached" },
+        { status: 401 }
+      );
     }
 
     const validToken = await verifyTokenAndGetPayload(token.value);
 
     if (!validToken) {
-      return NextResponse.json({ msg: "not valid token" }, { status: 401 });
+      return NextResponse.json(
+        { success: false, data: null, msg: "not valid token" },
+        { status: 401 }
+      );
     }
 
     return NextResponse.json({

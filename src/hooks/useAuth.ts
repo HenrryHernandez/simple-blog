@@ -21,6 +21,7 @@ export const useAuth = () => {
       return data.data?.user;
     } catch (error) {
       console.log(error);
+
       return null;
     } finally {
       setIsLoading(false);
@@ -31,11 +32,12 @@ export const useAuth = () => {
     setIsLoading(true);
 
     try {
-      const { data } = await blogApi.post("/auth/sign-up", signUpData);
+      await blogApi.post<StandardResponse<User>>("/auth/sign-up", signUpData);
 
       return true;
     } catch (error) {
       console.log(error);
+
       return false;
     } finally {
       setIsLoading(false);
@@ -46,13 +48,12 @@ export const useAuth = () => {
     setIsLoading(true);
 
     try {
-      const { data } = await blogApi.get<StandardResponse<User>>(
-        "/auth/validate-token"
-      );
+      await blogApi.get<StandardResponse<User>>("/auth/validate-token");
 
       return true;
     } catch (error) {
       console.log(error);
+
       return false;
     } finally {
       setIsLoading(false);

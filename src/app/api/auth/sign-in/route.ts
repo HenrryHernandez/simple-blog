@@ -19,19 +19,27 @@ export async function POST(request: NextRequest) {
     });
 
     if (!userFound) {
-      return NextResponse.json({
-        status: 400,
-        msg: "The user doesn't exist",
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          data: null,
+          msg: "The user doesn't exist",
+        },
+        { status: 400 }
+      );
     }
 
     const validPassword = bcrypt.compareSync(password, userFound.password);
 
     if (!validPassword) {
-      return NextResponse.json({
-        status: 400,
-        msg: "Invalid password",
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          data: null,
+          msg: "Invalid password",
+        },
+        { status: 400 }
+      );
     }
 
     const { id, username } = userFound;
@@ -40,16 +48,14 @@ export async function POST(request: NextRequest) {
 
     cookies().set("token", token, { httpOnly: true });
 
-    return NextResponse.json(
-      {
-        success: true,
-        msg: "Login succesfull",
-        data: { user: { id, email, username } },
-      },
-      {}
-    );
+    return NextResponse.json({
+      success: true,
+      msg: "Login succesfull",
+      data: { user: { id, email, username } },
+    });
   } catch (error) {
     console.log(error);
+
     return NextResponse.json(
       { success: false, data: null, msg: "error" },
       { status: 500 }
