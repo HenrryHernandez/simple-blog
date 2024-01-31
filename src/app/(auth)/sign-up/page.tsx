@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod/lib";
@@ -8,10 +10,14 @@ import { Input } from "@/components/ui/input";
 import { CardWrapper } from "@/components/CardWrapper";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/hooks";
 import { cn } from "@/lib/utils";
 import { SignUpSchema } from "@/utils";
 
 const SignInPage = () => {
+  const { isLoading, signUp } = useAuth();
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -20,6 +26,14 @@ const SignInPage = () => {
     resolver: zodResolver(SignUpSchema),
   });
 
+  const signUpUser = async (data: z.infer<typeof SignUpSchema>) => {
+    const userCreated = await signUp(data);
+
+    if (userCreated) {
+      router.push("/sign-in");
+    }
+  };
+
   return (
     <div className=" w-full h-full row-center">
       <CardWrapper
@@ -27,12 +41,7 @@ const SignInPage = () => {
         footerLabel="Already have an account?"
         footerLink="/sign-in"
       >
-        <form
-          onSubmit={handleSubmit(() => {
-            console.log("signing up...");
-          })}
-          className="space-y-8"
-        >
+        <form onSubmit={handleSubmit(signUpUser)} className="space-y-8">
           <div className="space-y-2">
             <div className="grid gap-2 py-2">
               <Label htmlFor="email">Email</Label>
@@ -79,7 +88,11 @@ const SignInPage = () => {
             </div>
           </div>
 
-          <Button disabled={false} type="submit" className="w-full bg-blue-300">
+          <Button
+            disabled={isLoading}
+            type="submit"
+            className="w-full bg-blue-300"
+          >
             Submit
           </Button>
         </form>
