@@ -48,7 +48,7 @@ const SignInPage = () => {
               <Input
                 {...register("email")}
                 type="email"
-                className={cn("bg-white", {
+                className={cn({
                   "focus-visible:ring-red-500": errors.email,
                 })}
                 placeholder="example@gmail.com"
