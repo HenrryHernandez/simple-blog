@@ -36,3 +36,59 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ msg: "post was not created" }, { status: 500 });
   }
 }
+
+type AllowedQueries = "title" | "authorId" | "content" | null;
+
+function isAllowedQuery(query: AllowedQueries): query is AllowedQueries {
+  return ["title", "authorId", "content", null].includes(query);
+}
+
+export async function GET(request: NextRequest) {
+  const key = request.nextUrl.searchParams.get("filterBy") as AllowedQueries;
+
+  const value = request.nextUrl.searchParams.get("value");
+
+  try {
+    let posts;
+
+    // check it is a valid search param
+    if (!key || !isAllowedQuery(key) || !value) {
+      posts = await db.post.findMany({
+        select: {
+          id: true,
+          title: true,
+          content: true,
+          author: { select: { username: true, email: true } },
+          createdAt: true,
+        },
+      });
+    } else {
+      posts = await db.post.findMany({
+        where: {
+          [key]: {
+            equals: key === "authorId" ? Number(value) : value,
+          },
+        },
+        select: {
+          id: true,
+          title: true,
+          content: true,
+          author: { select: { username: true, email: true } },
+          createdAt: true,
+        },
+      });
+    }
+
+    return NextResponse.json({
+      success: true,
+      data: { total: posts.length, posts },
+      msg: "success",
+    });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json(
+      { success: false, data: null, msg: "" },
+      { status: 500 }
+    );
+  }
+}
