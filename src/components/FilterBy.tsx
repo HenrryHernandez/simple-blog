@@ -12,31 +12,30 @@ import { Separator } from "./ui/separator";
 import { Label } from "./ui/label";
 import { FiltersContext } from "@/contexts";
 import { useUser } from "@/hooks";
-import { Author } from "@/interfaces";
+import { AllowedQueries, Author } from "@/interfaces";
 import { cn } from "@/lib/utils";
 
 export const FilterBy = () => {
-  const { filterByKey, filterByValue, setFilterByKey, setFilterByValue } =
-    useContext(FiltersContext);
+  const {
+    filterByKey,
+    filterByValue,
+    filter,
+    getAll,
+    setFilterByKey,
+    setFilterByValue,
+  } = useContext(FiltersContext);
 
   const [users, setUsers] = useState<Author[] | null>([]);
 
   const { getUsers } = useUser();
 
-  const handleCheckboxChange = (key: string) => {
+  const handleCheckboxChange = (key: AllowedQueries) => {
     setFilterByKey(key);
     setFilterByValue("");
   };
 
   const handleInputChange = (value: string | number) => {
     setFilterByValue(value);
-  };
-
-  const filter = () => {
-    console.log(filterByKey);
-    console.log(filterByValue);
-    setFilterByKey("");
-    setFilterByValue("");
   };
 
   useEffect(() => {
@@ -79,7 +78,7 @@ export const FilterBy = () => {
                 type="radio"
                 id="author"
                 name="component"
-                onChange={() => handleCheckboxChange("author")}
+                onChange={() => handleCheckboxChange("authorId")}
               />
               <Label htmlFor="author">Author</Label>
             </div>
@@ -98,7 +97,7 @@ export const FilterBy = () => {
                 onChange={(e) => handleInputChange(e.target.value)}
               />
             )}
-            {filterByKey === "author" && (
+            {filterByKey === "authorId" && (
               <ScrollArea className="h-44 w-full rounded-md border">
                 <div className="p-4">
                   {users?.map(({ id, username }) => (
@@ -120,6 +119,9 @@ export const FilterBy = () => {
 
           <div>
             <Button onClick={filter}>Filter</Button>
+            <Button onClick={getAll} className="ml-4">
+              Get all
+            </Button>
           </div>
         </div>
       </PopoverContent>

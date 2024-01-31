@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { verifyTokenAndGetPayload } from "@/helpers";
+import { AllowedQueries } from "@/interfaces";
 import db from "@/lib/db";
 
 export async function POST(request: NextRequest) {
@@ -37,15 +38,12 @@ export async function POST(request: NextRequest) {
   }
 }
 
-type AllowedQueries = "title" | "authorId" | "content" | null;
-
 function isAllowedQuery(query: AllowedQueries): query is AllowedQueries {
   return ["title", "authorId", "content", null].includes(query);
 }
 
 export async function GET(request: NextRequest) {
-  const key = request.nextUrl.searchParams.get("filterBy") as AllowedQueries;
-
+  const key = request.nextUrl.searchParams.get("key") as AllowedQueries;
   const value = request.nextUrl.searchParams.get("value");
 
   try {

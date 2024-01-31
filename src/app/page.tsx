@@ -1,22 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 
 import { PostCard } from "@/components";
-import { usePost } from "@/hooks";
-import { Post } from "@/interfaces";
+import { FiltersContext } from "@/contexts";
 
 export default function Home() {
-  const { isLoading, getPosts } = usePost();
-
-  const [posts, setPosts] = useState<Post[]>();
-
-  useEffect(() => {
-    getPosts().then((res) => {
-      console.log(res);
-      setPosts(res?.posts);
-    });
-  }, []);
+  const { posts } = useContext(FiltersContext);
 
   return (
     <div className="w-full col-center">
