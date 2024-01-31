@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { Header } from "@/components";
+import { FiltersContextProvider } from "@/contexts";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,9 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={inter.className}>
-        <Header />
+        <FiltersContextProvider>
+          <Header />
 
-        {children}
+          {children}
+        </FiltersContextProvider>
       </body>
     </html>
   );

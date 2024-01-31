@@ -1,7 +1,8 @@
-import React from "react";
 import Link from "next/link";
 
-import { Plus, Filter, Home } from "lucide-react";
+import { Plus, Home } from "lucide-react";
+
+import { FilterBy } from "./FilterBy";
 
 export const Header = () => {
   return (
@@ -16,12 +17,7 @@ export const Header = () => {
         </div>
 
         <div>
-          <button
-            type="button"
-            className="p-4 rounded-md border border-gray-300 bg-gray-200 hover:bg-gray-300"
-          >
-            <Filter className="h-6 w-6 text-gray-400" aria-hidden="true" />
-          </button>
+          <FilterBy />
         </div>
 
         <div>
