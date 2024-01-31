@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { Header, ModalsContainer } from "@/components";
+import { Header, Initializer, ModalsContainer } from "@/components";
 import { FiltersContextProvider, ModalsHandlersProvider } from "@/contexts";
 import "./globals.css";
+import { ReduxProvider } from "@/redux";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,15 +21,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={inter.className}>
-        <ModalsHandlersProvider>
-          <ModalsContainer>
-            <FiltersContextProvider>
-              <Header />
+        <ReduxProvider>
+          <Initializer>
+            <ModalsHandlersProvider>
+              <ModalsContainer>
+                <FiltersContextProvider>
+                  <Header />
 
-              {children}
-            </FiltersContextProvider>
-          </ModalsContainer>
-        </ModalsHandlersProvider>
+                  {children}
+                </FiltersContextProvider>
+              </ModalsContainer>
+            </ModalsHandlersProvider>
+          </Initializer>
+        </ReduxProvider>
       </body>
     </html>
   );

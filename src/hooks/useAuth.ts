@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import blogApi from "@/lib/blogApi";
 import { SignInSchema, SignUpSchema } from "@/utils";
+import { StandardResponse, User } from "@/interfaces";
 
 export const useAuth = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,5 +39,22 @@ export const useAuth = () => {
     }
   };
 
-  return { isLoading, signIn, signUp };
+  const validateToken = async () => {
+    setIsLoading(true);
+
+    try {
+      const { data } = await blogApi.get<StandardResponse<User>>(
+        "/auth/validate-token"
+      );
+
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { isLoading, signIn, signUp, validateToken };
 };
