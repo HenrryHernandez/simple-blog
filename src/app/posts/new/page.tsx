@@ -38,8 +38,8 @@ const NewPostPage = () => {
   };
 
   return (
-    <div className="w-full h-full row-center">
-      <Card className="w-full sm:max-w-[800px] bg-blue-100 shadow-md">
+    <div className="min-h-[calc(100vh-80px)] w-full h-full row-center">
+      <Card className="w-full sm:max-w-[800px] bg-gray-200 shadow-md">
         <CardHeader>
           <div className="row-center">New Post</div>
         </CardHeader>
@@ -50,7 +50,7 @@ const NewPostPage = () => {
                 <Label htmlFor="title">Title</Label>
                 <Input
                   {...register("title")}
-                  className={cn("bg-white", {
+                  className={cn({
                     "focus-visible:ring-red-500": errors.title,
                   })}
                 />
@@ -77,7 +77,7 @@ const NewPostPage = () => {
             <Button
               disabled={isLoading}
               type="submit"
-              className="w-full bg-blue-300"
+              className="w-full bg-gray-600"
             >
               Submit
             </Button>
