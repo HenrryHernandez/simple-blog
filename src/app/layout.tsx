@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 
 import { Toaster } from "sonner";
 
@@ -26,6 +27,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={inter.className}>
+        <Script src="./script-sw.js" strategy="beforeInteractive" />
+
         <Providers>
           <Header /> {children}
         </Providers>
