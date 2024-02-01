@@ -13,6 +13,12 @@ self.addEventListener("install", (event) => {
 // Establish a cache name
 
 self.addEventListener("fetch", (event) => {
+  // we only store GET method calls
+  // methods like POST are not allowed
+  if (event.request.method !== "GET") {
+    return;
+  }
+
   event.respondWith(
     caches.open(CACHE_NAME).then((cache) => {
       // Go to the network first
