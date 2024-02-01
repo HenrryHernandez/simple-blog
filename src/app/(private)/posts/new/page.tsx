@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useContext } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
@@ -13,11 +13,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { FiltersContext } from "@/contexts";
 import { usePost } from "@/hooks";
 import { cn } from "@/lib/utils";
 import { NewPostSchema } from "@/utils";
 
 const NewPostPage = () => {
+  const { getAll } = useContext(FiltersContext);
   const { isLoading, createNewPost } = usePost();
   const {
     register,
@@ -36,6 +38,7 @@ const NewPostPage = () => {
     } else {
       toast.success("Post created successfully");
       reset({ title: "", content: "" });
+      getAll();
     }
   };
 
