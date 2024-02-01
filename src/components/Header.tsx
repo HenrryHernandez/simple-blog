@@ -14,12 +14,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { useAuth } from "@/hooks";
+import { useAuth, useOnlineStatus } from "@/hooks";
+import { cn } from "@/lib/utils";
 import { AppDispatch, useAppSelector, clearAuth } from "@/redux";
 
 const Menu = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { signOut } = useAuth();
+  const online = useOnlineStatus();
 
   const logout = async () => {
     const res = signOut();
@@ -35,14 +37,32 @@ const Menu = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="p-4 rounded-md border border-gray-300 bg-gray-200 hover:bg-gray-300 cursor-pointer">
-        <Settings className="h-6 w-6 text-gray-400" aria-hidden="true" />
+      <DropdownMenuTrigger
+        disabled={!online}
+        className={cn(
+          "p-4 rounded-md border border-gray-300 bg-gray-200 hover:bg-gray-300 cursor-pointer",
+          {
+            "border-gray-100 bg-gray-100 hover:bg-gray-100 cursor-default":
+              !online,
+          }
+        )}
+      >
+        <Settings
+          className={cn("h-6 w-6 text-gray-400", {
+            "text-gray-300": !online,
+          })}
+          aria-hidden="true"
+        />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem>
+        <DropdownMenuItem disabled={!online}>
           <Link href="/posts/new">Add new post</Link>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={logout} className="cursor-pointer">
+        <DropdownMenuItem
+          onClick={logout}
+          className="cursor-pointer"
+          disabled={!online}
+        >
           Sign out
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -1,14 +1,25 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 import { PostCard } from "@/components";
 import { FiltersContext } from "@/contexts";
+import { useOnlineStatus } from "@/hooks";
 
 export default function Home() {
   const { isLoading, posts } = useContext(FiltersContext);
+  const online = useOnlineStatus();
+
+  useEffect(() => {
+    if (!online) {
+      toast.error(
+        "You lost connection. You will only have access to the home page."
+      );
+    }
+  }, [online]);
 
   if (isLoading) {
     return (
