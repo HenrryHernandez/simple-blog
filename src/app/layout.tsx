@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   icons: {
     apple: "/icon.png",
   },
+  metadataBase: new URL("http://localhost:3000"),
 };
 
 export default function RootLayout({
