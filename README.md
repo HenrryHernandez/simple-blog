@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Requerimientos
 
-## Getting Started
+- Al menos la version 18 de node (si no funciona, provar con la 20)
+- Docker
 
-First, run the development server:
+# Instalar la base de datos
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Dentro del proyecto hay un archivo llamado "docker-compose.yml." Estando en la misma ruta que el archivo, ejecutar el comando:
+
+```
+docker compose up -d
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Este comando creará un contenedor con lo necesario para la configuración de la base de datos.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Configurar proyecto
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Instalar dependencias con comando: **npm install**
+2. Revisar las variables de entorno. Estas son necesarias para poder conectar a la base de datos. (En este caso por ser un proyecto demo, las incluí ya en el mismo repositorio y estan listas ya para usarse tal cual.)
+3. Para crear tablas en la base de datos, ejecutar el comando: **npx prisma migrate dev --name dev**
 
-## Learn More
+# Correr el proyecto opcion 1 (sin funcionalidad offline)
 
-To learn more about Next.js, take a look at the following resources:
+1. Ejecutar comando: **npm run dev**
+2. Por default el proyecto corre en la url: http://localhost:3000. Dirigirse ahí.
+3. El proyecto debería de estar ya funcionando.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Correr el proyecto opcion 2 (con funcionalidad offline)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Ir al root layout que se encuentra en el path: /src/app/layout.tsx y descomentar la linea 31. Esto hara que el Service Worker se configure.
+2. Correr el comando: **npm run build**
+3. Correr el comando: **npm run start**
+4. Por default el proyecto corre en la url: http://localhost:3000. Dirigirse ahí.
+5. El proyecto debería de estar ya funcionando.
 
-## Deploy on Vercel
+# Notas
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- La razon por la que doy dos opciones para ejecutar el proyecto es que al configurar el Service Worker, este hace que la aplicación funcione "raro." Entonces si solo se desea ver la aplicación normal, podemos seguir la opción uno.
+- En producción, el archivo ".env" no se debe de ponder en el proyecto, estoy conciente de ello, solo que aqui, al ser una demostración, lo adjunté para fines prácticos.
+- El proyecto ya toma las variables de entorno necesarias, pero también adjunté otras variables de entorno que no son necesarias en el proyecto, pero que les servirán para que puedan conectarse a la base de datos usando alguna otra herramienta como Workbench o TablePlus.
