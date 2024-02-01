@@ -16,7 +16,6 @@ export const useUser = () => {
 
       return data.data?.users || [];
     } catch (error) {
-      console.log(error);
       return [];
     } finally {
       setIsLoading(false);

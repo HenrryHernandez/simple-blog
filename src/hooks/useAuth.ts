@@ -20,8 +20,6 @@ export const useAuth = () => {
 
       return data.data?.user;
     } catch (error) {
-      console.log(error);
-
       return null;
     } finally {
       setIsLoading(false);
@@ -36,8 +34,6 @@ export const useAuth = () => {
 
       return true;
     } catch (error) {
-      console.log(error);
-
       return false;
     } finally {
       setIsLoading(false);
@@ -52,8 +48,6 @@ export const useAuth = () => {
 
       return true;
     } catch (error) {
-      console.log(error);
-
       return false;
     } finally {
       setIsLoading(false);
@@ -68,8 +62,6 @@ export const useAuth = () => {
 
       return true;
     } catch (error) {
-      console.log(error);
-
       return false;
     } finally {
       setIsLoading(false);

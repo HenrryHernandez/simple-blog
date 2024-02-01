@@ -54,8 +54,6 @@ export async function POST(request: NextRequest) {
       data: { user: { id, email, username } },
     });
   } catch (error) {
-    console.log(error);
-
     return NextResponse.json(
       { success: false, data: null, msg: "error" },
       { status: 500 }

@@ -35,7 +35,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, data: newPost, msg: "success" });
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       { success: false, data: null, msg: "post was not created" },
       { status: 500 }
@@ -88,7 +87,6 @@ export async function GET(request: NextRequest) {
       msg: "success",
     });
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       { success: false, data: null, msg: "" },
       { status: 500 }

@@ -20,8 +20,6 @@ export const usePost = () => {
 
       return data.data;
     } catch (error) {
-      console.log(error);
-
       return null;
     } finally {
       setIsLoading(false);
@@ -40,7 +38,6 @@ export const usePost = () => {
 
       return data.data;
     } catch (error) {
-      console.log(error);
       return null;
     } finally {
       setIsLoading(false);
