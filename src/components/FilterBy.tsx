@@ -46,7 +46,10 @@ export const FilterBy = () => {
 
   return (
     <Popover>
-      <PopoverTrigger className="p-4 rounded-md border border-gray-300 bg-gray-200 hover:bg-gray-300">
+      <PopoverTrigger
+        aria-label="Use filter"
+        className="p-4 rounded-md border border-gray-300 bg-gray-200 hover:bg-gray-300"
+      >
         <Filter className="h-6 w-6 text-gray-400" aria-hidden="true" />
       </PopoverTrigger>
       <PopoverContent className="w-96">

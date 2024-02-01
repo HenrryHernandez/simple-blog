@@ -80,6 +80,7 @@ export const Header = () => {
         <Link
           href="/"
           className="p-4 rounded-md border border-gray-300 bg-gray-200 hover:bg-gray-300 cursor-pointer"
+          aria-label="Go back to home page"
         >
           <Home className="h-6 w-6 text-gray-400" aria-hidden="true" />
         </Link>
@@ -97,6 +98,7 @@ export const Header = () => {
           <Link
             href={"/sign-in"}
             className="p-4 rounded-md border border-gray-300 bg-gray-200 hover:bg-gray-300 cursor-pointer"
+            aria-label="Go to sign in page"
           >
             Sign in &rarr;
           </Link>
