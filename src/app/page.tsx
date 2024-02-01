@@ -1,6 +1,7 @@
 "use client";
 
 import { useContext, useEffect } from "react";
+import Link from "next/link";
 
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -35,9 +36,16 @@ export default function Home() {
         <div className="min-h-[calc(100vh-80px)] w-full flex-wrap p-2 sm:p-8">
           <main className="w-full flex flex-col items-center">
             <div className="flex flex-wrap justify-center gap-8">
-              {posts?.map((post) => (
-                <PostCard key={post.id} {...post} />
-              ))}
+              {!posts || posts.length <= 0 ? (
+                <div>
+                  There are no posts to show.{" "}
+                  <Link href="/posts/new" className="text-blue-400 underline">
+                    Create one here
+                  </Link>
+                </div>
+              ) : (
+                posts?.map((post) => <PostCard key={post.id} {...post} />)
+              )}
             </div>
           </main>
         </div>
